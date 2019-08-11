@@ -8,7 +8,11 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
+
 public class CatForm extends FormLayout {
+
+    private Long id;
+
     private final CatApi catApi;
     private final CatsUi catsUi;
     private TextField name = new TextField("Name");
@@ -28,5 +32,12 @@ public class CatForm extends FormLayout {
         name.clear();
         catApi.saveCat(cat);
         catsUi.refreshTable();
+    }
+
+    public void fill(Cat item) {
+        name.setValue(item.getName());
+        age.setValue((double)item.getAge());
+        id=item.getId();
+
     }
 }
