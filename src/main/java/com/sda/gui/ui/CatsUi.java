@@ -3,6 +3,7 @@ package com.sda.gui.ui;
 import com.sda.gui.model.Cat;
 import com.sda.gui.service.CatApi;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,21 @@ public class CatsUi extends VerticalLayout {
     public CatsUi(CatApi catApi){
         this.catApi = catApi;
 
+        CatForm form = new CatForm(catApi,this);
+
         catGrid.setColumns("id", "name", "age");
-       catGrid.setItems(catApi.getCats());
-       add(catGrid);
+        refreshTable();
+
+        HorizontalLayout hl = new HorizontalLayout();
+        hl.setSizeFull();
+        hl.add(catGrid,form);
 
 
+       add(hl);
 
     }
 
+    public void refreshTable() {
+        catGrid.setItems(catApi.getCats());
+    }
 }

@@ -11,11 +11,16 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.http.HttpMethod.POST;
+
 @Service
 public class CatApi {
 
     public static final String CATS_URL = "http://localhost:8080/cats";
     private final RestTemplate restTemplate;
+
+
+
 
     @Autowired
     public CatApi(RestTemplate restTemplate) {
@@ -28,6 +33,10 @@ public class CatApi {
             return Arrays.asList(responseBody);
     }
 
+    public void saveCat(Cat cat) {
+        restTemplate.exchange(CATS_URL,POST,
+                new HttpEntity<>(cat,null),Object.class);
+    }
 }
 
 
